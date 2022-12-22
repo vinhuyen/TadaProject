@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   Dimensions,
   FlatList,
   Image,
+  RefreshControl,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -109,12 +110,25 @@ const FriendList = () => {
   const renderItem = ({item}) => {
     return <Item item={item} />;
   };
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
   return (
     <FlatList
+      contentContainerStyle={styles.scrollView}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
       data={DATA}
       renderItem={renderItem}
       keyExtractor={item => item.id}
-      contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
       ListHeaderComponent={
         <View style={styles.headerContainer}>
           <View style={styles.header}>
@@ -223,6 +237,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  scrollView: {
+    flex: 1,
+    backgroundColor: 'pink',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
