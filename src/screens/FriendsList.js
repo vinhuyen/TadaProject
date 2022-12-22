@@ -17,41 +17,85 @@ const height = Dimensions.get('window').height;
 const DATA = [
   {
     id: 1,
-    avatar:
-      'https://scontent.fdad2-1.fna.fbcdn.net/v/t39.30808-6/299578663_1480996059043842_7836062583426641710_n.jpg?stp=cp6_dst-jpg_p720x720&_nc_cat=107&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=b72el6NaxIkAX9eiK2d&_nc_ht=scontent.fdad2-1.fna&oh=00_AfCQ12j1eb6Cs60cqJRBGyz0Kj0_yGyMTp5DKbNYtjCggQ&oe=63A6C1E3',
-    username: 'Vinh Uyen',
-    followersAmount: 15,
+    avatar: '',
+    username: 'no name',
+    followersAmount: 1,
   },
   {
-    id: 2,
+    id: 5,
     avatar:
-      'https://scontent.fdad2-1.fna.fbcdn.net/v/t39.30808-6/299196306_1480996085710506_7206253772070476424_n.jpg?stp=cp6_dst-jpg&_nc_cat=108&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=6GAJJMuFRssAX_-CI3F&_nc_ht=scontent.fdad2-1.fna&oh=00_AfAHtDrqN9EQnnIguUlcU78KczVHnFxNhRRVUI4llM5iOw&oe=63A8523F',
-    username: 'Uyen nhan cach 1',
-    followersAmount: 0,
+      'https://toplist.vn/images/800px/bai-van-ta-con-ga-trong-hay-nhat-209461.jpg',
+    username: 'con gà gáy',
   },
   {
-    id: 3,
+    id: 6,
     avatar:
-      'https://scontent.fdad1-3.fna.fbcdn.net/v/t39.30808-6/299366293_1480996075710507_1200499193523250191_n.jpg?stp=cp6_dst-jpg&_nc_cat=110&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=eBnXmiXBFqEAX_4QruV&_nc_ht=scontent.fdad1-3.fna&oh=00_AfA6Ms_cELBzOg0_4ND1RY7QbCCI3io6wwHzkiLvz2q8xg&oe=63A6E382',
-    username: 'Dzinh Yennnn',
-    followersAmount: 15,
+      'https://img.bcdcnt.net/files/3f/47/14/3f4714b35f299ec2f6b529d9cca4e9f9.jpg',
+    username: 'có con chim vành khuyên',
   },
   {
-    id: 4,
+    id: 7,
     avatar:
-      'https://scontent.fdad2-1.fna.fbcdn.net/v/t39.30808-6/299660185_1480996055710509_3431310840572106157_n.jpg?stp=cp6_dst-jpg&_nc_cat=101&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=_mZjBfjYlfQAX_2Kz2E&_nc_ht=scontent.fdad2-1.fna&oh=00_AfAmon4PXo_cCxv8xqfZZiupyd1ZQ37TvZL_ctODpf5xpQ&oe=63A79DB5',
-    username: 'Peekapoo Uyen',
-    followersAmount: 0,
+      'https://ngonaz.com/wp-content/uploads/2022/08/con-than-lan-so-may-2.jpg',
+    username: '2 con thằn lằn con',
+  },
+  {
+    id: 8,
+    avatar:
+      'https://vcdn1-vnexpress.vnecdn.net/2021/11/04/251847737-3868210133437093-7517-1635998498.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=GMw6Yslappg281JoaEUicw',
+    username: 'một con vịt',
+  },
+  {
+    id: 9,
+    avatar: '',
+    username: 'con gà gáy',
+  },
+  {
+    id: 10,
+    avatar:
+      'https://img.bcdcnt.net/files/3f/47/14/3f4714b35f299ec2f6b529d9cca4e9f9.jpg',
+    username: 'có con chim vành khuyên',
+  },
+  {
+    id: 11,
+    avatar:
+      'https://ngonaz.com/wp-content/uploads/2022/08/con-than-lan-so-may-2.jpg',
+    username: '2 con thằn lằn con',
+  },
+  {
+    id: 12,
+    avatar:
+      'https://vcdn1-vnexpress.vnecdn.net/2021/11/04/251847737-3868210133437093-7517-1635998498.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=GMw6Yslappg281JoaEUicw',
+    username: 'một con vịt',
+  },
+  {
+    id: 13,
+    avatar: '',
+    username: '2 con thằn lằn con',
+  },
+  {
+    id: 14,
+    avatar:
+      'https://vcdn1-vnexpress.vnecdn.net/2021/11/04/251847737-3868210133437093-7517-1635998498.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=GMw6Yslappg281JoaEUicw',
+    username: 'một con vịt',
   },
 ];
 
 const Item = ({item}) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity item={item} style={styles.container}>
       <Image style={styles.image} source={{uri: `${item.avatar}`}} />
-      <View>
+      <View
+        style={{height: 80, flexDirection: 'column', justifyContent: 'center'}}>
         <Text style={styles.username}>{item.username}</Text>
-
+        <Text
+          style={
+            item.followersAmount > 0
+              ? styles.visibilityFollowers
+              : styles.hiddenFollowers
+          }>
+          Follow by {item.followersAmount}
+        </Text>
         <View style={styles.buttonWrapper}>
           <ConfirmButton />
           <DeleteButton />
@@ -70,6 +114,40 @@ const FriendList = () => {
       data={DATA}
       renderItem={renderItem}
       keyExtractor={item => item.id}
+      contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
+      ListHeaderComponent={
+        <View style={styles.headerContainer}>
+          <View style={styles.header}>
+            <Text style={styles.primaryText}>Friends Request</Text>
+            <Image
+              style={styles.iconSearch}
+              source={{
+                uri: 'https://cdn-icons-png.flaticon.com/512/54/54481.png',
+              }}
+            />
+          </View>
+          <View style={styles.viewBotton}>
+            <TouchableOpacity style={styles.headerButton}>
+              <Text style={{color: 'black', fontSize: 15}}>suggestion</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.headerButton}>
+              <Text style={{color: 'black', fontSize: 15}}>Your Friends</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      }
+      stickyHeaderIndices={[0]}
+      ListEmptyComponent={
+        <View
+          style={{
+            backgroundColor: 'blue',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexGrow: 1,
+          }}>
+          <Text>Empty</Text>
+        </View>
+      }
     />
   );
 };
@@ -78,16 +156,16 @@ export default FriendList;
 
 const styles = StyleSheet.create({
   buttonWrapper: {
-    width: width - 100,
+    width: width - 110,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
   image: {
-    width: 80,
-    height: 80,
+    width: 90,
+    height: 90,
     resizeMode: 'cover',
     borderRadius: 50,
-    marginRight: 5,
+    marginRight: 10,
   },
   container: {
     flexDirection: 'row',
@@ -98,4 +176,54 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'black',
   },
+  visibilityFollowers: {
+    color: 'grey',
+  },
+  hiddenFollowers: {
+    opacity: 0,
+    height: 0,
+  },
+  primaryText: {
+    fontSize: 30,
+    fontWeight: '700',
+    color: 'black',
+    borderBottomWidth: 1,
+    borderColor: 'grey',
+    paddingBottom: 5,
+    marginBottom: 5,
+  },
+  header: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 20,
+  },
+  viewBotton: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: 280,
+    padding: 10,
+  },
+  iconSearch: {
+    width: 25,
+    height: 25,
+  },
+  headerContainer: {
+    height: 120,
+    backgroundColor: 'red',
+  },
+  headerButton: {
+    borderRadius: 50,
+    backgroundColor: '#E4E3E8',
+    width: 120,
+    height: 40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
+
+//get cac phan tu cua byID vao allID
